@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# csv data downloaded from luma for registration list and attendee responses
+luma.csv
