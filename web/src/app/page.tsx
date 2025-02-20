@@ -1,6 +1,6 @@
+import { getAttendeeFromEmail } from "@/backend/server";
 import { Display } from "@/components/Display";
 import { Landing } from "@/components/Landing";
-import { getAttendeeFromEmail } from "@/utils/server";
 
 export default async function Home({
   searchParams,

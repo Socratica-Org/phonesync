@@ -1,6 +1,6 @@
 "use client";
-import { parseAttendee } from "@/utils/color";
-import { Attendee } from "@/utils/server";
+import { parseAttendee } from "@/backend/color";
+import { Attendee } from "@/backend/server";
 import { useEffect, useMemo, useState } from "react";
 import { ProgramTypes, WSMessage } from "../../../server";
 import { StatusIndicator } from "./StatusIndicator";
@@ -15,6 +15,12 @@ interface Props {
   attendee: Attendee;
 }
 
+const WS_URL = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
+if (!WS_URL) {
+  throw new Error("NEXT_PUBLIC_WEBSOCKET_URL is not set");
+}
+console.log(`websocket url: ${WS_URL}`);
+
 export const Display = ({ attendee }: Props) => {
   const [status, setStatus] = useState<ConnectionStatus>("connecting");
   const [broadcastProgram, setBroadcastProgram] = useState<
@@ -26,7 +32,7 @@ export const Display = ({ attendee }: Props) => {
   );
 
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:8080/ws?email=${attendee.email}`);
+    const ws = new WebSocket(`${WS_URL}?email=${attendee.email}`);
 
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data) as WSMessage;
