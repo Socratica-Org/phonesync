@@ -14,7 +14,7 @@ interface ParsedAttendee {
 export const parseAttendee = (program: string): ParsedAttendee => {
   const normalizedProgram = program.toLowerCase().trim();
 
-  // Engineering variants - Deep blue for precision/technology
+  // Engineering variants - Purple Deep blue for precision/technology
   if (
     normalizedProgram.includes("engineer") ||
     normalizedProgram.includes("syde")
@@ -22,27 +22,27 @@ export const parseAttendee = (program: string): ParsedAttendee => {
     return {
       program: {
         name: "engineering",
-        programColor: "#2563eb",
-      },
-    };
-  }
-
-  // Math variants - Purple for abstract thinking/complexity
-  if (
-    normalizedProgram.includes("math") ||
-    normalizedProgram.includes("stat") ||
-    normalizedProgram.includes("cs") ||
-    normalizedProgram.includes("computer")
-  ) {
-    return {
-      program: {
-        name: "math",
         programColor: "#7c3aed",
       },
     };
   }
 
-  // Science variants - Emerald for nature/discovery
+  // Math variants - Pink
+  if (
+    normalizedProgram.includes("math") ||
+    normalizedProgram.includes("stat") ||
+    normalizedProgram.includes("computer") ||
+    normalizedProgram === "cs"
+  ) {
+    return {
+      program: {
+        name: "math",
+        programColor: "#ec4899",
+      },
+    };
+  }
+
+  // Science variants - Blue
   if (
     normalizedProgram.includes("science") ||
     normalizedProgram.includes("physics") ||
@@ -52,37 +52,48 @@ export const parseAttendee = (program: string): ParsedAttendee => {
     return {
       program: {
         name: "science",
-        programColor: "#059669",
+        programColor: "#2563eb",
       },
     };
   }
 
-  // Arts & Humanities variants - Rose for creativity/expression
+  // Arts & Humanities variants - Orange
   if (
     normalizedProgram.includes("art") ||
     normalizedProgram.includes("design") ||
     normalizedProgram.includes("film") ||
-    normalizedProgram.includes("media")
+    normalizedProgram.includes("media") ||
+    normalizedProgram.includes("music") ||
+    normalizedProgram.includes("theatre") ||
+    normalizedProgram.includes("english") ||
+    normalizedProgram.includes("history") ||
+    normalizedProgram.includes("philosophy") ||
+    normalizedProgram.includes("languages") ||
+    normalizedProgram.includes("literature") ||
+    normalizedProgram.includes("creative") ||
+    normalizedProgram === "gbda"
   ) {
     return {
       program: {
         name: "arts",
-        programColor: "#e11d48",
+        programColor: "#f59e0b",
       },
     };
   }
 
-  // Business variants - Amber for wealth/prosperity
+  // Business variants - Green
   if (
-    normalizedProgram.includes("environment") ||
-    normalizedProgram.includes("geography") ||
-    normalizedProgram.includes("earth") ||
-    normalizedProgram.includes("climate")
+    normalizedProgram.includes("business") ||
+    normalizedProgram.includes("economics") ||
+    normalizedProgram.includes("accounting") ||
+    normalizedProgram.includes("finance") ||
+    normalizedProgram.includes("marketing") ||
+    normalizedProgram.includes("management")
   ) {
     return {
       program: {
         name: "business",
-        programColor: "#d97706",
+        programColor: "#16a34a",
       },
     };
   }
