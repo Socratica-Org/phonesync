@@ -7,17 +7,34 @@ import {
 
 const GLOBAL_TOPIC = "global";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "*",
+  "Access-Control-Allow-Headers": "*",
+};
+
 // Helper functions for common responses
 const jsonResponse = (data: any, status = 200) =>
-  new Response(JSON.stringify(data), { status });
+  new Response(JSON.stringify(data), {
+    status,
+    headers: corsHeaders,
+  });
 
 const errorResponse = (message: string, status = 400) =>
-  new Response(message, { status });
+  new Response(message, {
+    status,
+    headers: corsHeaders,
+  });
 
 const server = Bun.serve<WSData>({
   port: process.env.PORT ? parseInt(process.env.PORT) : 10000,
   async fetch(req, server) {
     const url = new URL(req.url);
+
+    // Handle CORS preflight requests
+    if (req.method === "OPTIONS") {
+      return new Response(null, { headers: corsHeaders });
+    }
 
     try {
       switch (url.pathname) {
