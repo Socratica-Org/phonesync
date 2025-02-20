@@ -1,3 +1,4 @@
 attendees.json
 *.csv
 .vercel
+.env*.local
