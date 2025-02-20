@@ -51,7 +51,7 @@ export const Display = ({ attendee }: Props) => {
   if (!broadcastProgram) {
     return (
       <div className="min-h-screen w-full transition-colors duration-1000 grid place-items-center">
-        <div className="p-4 rounded-lg backdrop-blur-sm flex flex-col items-center gap-4">
+        <div className="p-4 rounded-lg backdrop-blur-sm flex flex-col items-center gap-2">
           <div className="text-4xl">⁂</div>
           <StatusIndicator status={status} />
         </div>
