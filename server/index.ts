@@ -47,7 +47,7 @@ const errorResponse = (message: string, status = 400) =>
   new Response(message, { status });
 
 const server = Bun.serve<WSData>({
-  port: 8080,
+  port: process.env.PORT ? parseInt(process.env.PORT) : 10000,
   async fetch(req, server) {
     const url = new URL(req.url);
 
