@@ -1,7 +1,13 @@
 // We might want an LLM to categorize this instead
 // See Waterloo's official color palette here: https://uwaterloo.ca/brand/how-express-our-brand/colour
 // Lowkey their brand color saturation kinda sucks though maybe just use tailwind's
-export const getProgramColor = (program: string): string => {
+
+interface Program {
+  name: string;
+  color: string;
+}
+
+export const getProgram = (program: string): Program => {
   const normalizedProgram = program.toLowerCase().trim();
 
   // Engineering variants
@@ -9,7 +15,10 @@ export const getProgramColor = (program: string): string => {
     normalizedProgram.includes("engineer") ||
     normalizedProgram.includes("syde")
   ) {
-    return "#A05DCB"; // Engineering level 2 purple
+    return {
+      name: "Engineering",
+      color: "#A05DCB",
+    };
   }
 
   // Science variants
@@ -19,7 +28,10 @@ export const getProgramColor = (program: string): string => {
     normalizedProgram.includes("chemistry") ||
     normalizedProgram.includes("biology")
   ) {
-    return "#7E9CCC"; // Science level 2 blue
+    return {
+      name: "Science",
+      color: "#7E9CCC",
+    };
   }
 
   // Arts & Humanities variants
@@ -29,7 +41,10 @@ export const getProgramColor = (program: string): string => {
     normalizedProgram.includes("film") ||
     normalizedProgram.includes("media")
   ) {
-    return "#F7BF0A"; // Arts level 2 orange
+    return {
+      name: "Arts & Humanities",
+      color: "#F7BF0A",
+    };
   }
 
   // Math variants
@@ -39,7 +54,10 @@ export const getProgramColor = (program: string): string => {
     normalizedProgram.includes("cs") ||
     normalizedProgram.includes("computer")
   ) {
-    return "#EF60AD"; // Math level 2 pink
+    return {
+      name: "Math",
+      color: "#EF60AD",
+    };
   }
 
   // Environment variants
@@ -49,7 +67,10 @@ export const getProgramColor = (program: string): string => {
     normalizedProgram.includes("earth") ||
     normalizedProgram.includes("climate")
   ) {
-    return "#CEDE00"; // Environment level 2 green
+    return {
+      name: "Environment",
+      color: "#CEDE00",
+    };
   }
 
   // Health variants
@@ -59,8 +80,14 @@ export const getProgramColor = (program: string): string => {
     normalizedProgram.includes("medicine") ||
     normalizedProgram.includes("nursing")
   ) {
-    return "#00C2DE"; // Health level 2 teal
+    return {
+      name: "Health",
+      color: "#00C2DE",
+    };
   }
 
-  return "#ffffff"; // white for unknown/empty
+  return {
+    name: "Unknown",
+    color: "#ffffff",
+  };
 };

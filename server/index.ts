@@ -8,8 +8,20 @@ const BroadcastMessageSchema = z.object({
   send: z.string().min(1),
 });
 
+export const WSMessage = z.discriminatedUnion("type", [
+  z.object({
+    type: z.literal("joined"),
+    email: z.string().email(),
+  }),
+  z.object({
+    type: z.literal("broadcast"),
+    msg: z.string().min(1),
+  }),
+]);
+
 type WSData = z.infer<typeof WSDataSchema>;
 type BroadcastMessage = z.infer<typeof BroadcastMessageSchema>;
+type ServerMessage = z.infer<typeof WSMessage>;
 
 const GLOBAL_TOPIC = "global";
 
@@ -53,7 +65,12 @@ const server = Bun.serve<WSData>({
             return errorResponse(result.error.message);
           }
 
-          server.publish(GLOBAL_TOPIC, result.data.send);
+          const message: ServerMessage = {
+            type: "broadcast",
+            msg: result.data.send,
+          };
+
+          server.publish(GLOBAL_TOPIC, JSON.stringify(message));
           return jsonResponse({ success: true });
         }
 
@@ -68,7 +85,11 @@ const server = Bun.serve<WSData>({
   websocket: {
     open(ws) {
       ws.subscribe(GLOBAL_TOPIC);
-      server.publish(GLOBAL_TOPIC, `${ws.data.email} has entered the chat`);
+      const message: ServerMessage = {
+        type: "joined",
+        email: ws.data.email,
+      };
+      ws.send(JSON.stringify(message));
     },
 
     message(ws, message) {
@@ -77,7 +98,6 @@ const server = Bun.serve<WSData>({
     },
 
     close(ws) {
-      server.publish(GLOBAL_TOPIC, `${ws.data.email} has left the chat`);
       ws.unsubscribe(GLOBAL_TOPIC);
     },
   },
