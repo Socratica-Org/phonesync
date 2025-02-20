@@ -5,7 +5,7 @@ import { Landing } from "@/components/Landing";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ email: string }>;
 }) {
   const email = (await searchParams).email as string;
 
