@@ -9,4 +9,4 @@ python process.py
 ```
 
 - This will create a `attendees.json` file in the `preprocessing` directory.
-- Move this into `web/src/server/attendees.json`
+- Move this into `web/src/backend/attendees.json`
