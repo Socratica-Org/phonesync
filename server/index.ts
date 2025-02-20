@@ -10,13 +10,15 @@ const ProgramMessageSchema = z.enum([
   "engineering",
   "arts",
   "business",
+  "unknown",
+  "all",
 ]);
 
 const BroadcastProgramMessageSchema = z.object({
-  msg: ProgramMessageSchema,
+  program: ProgramMessageSchema,
 });
 
-export type ProgramMessage = z.infer<typeof ProgramMessageSchema>;
+export type ProgramTypes = z.infer<typeof ProgramMessageSchema>;
 
 const WSMessageSchema = z.discriminatedUnion("type", [
   z.object({
@@ -79,7 +81,7 @@ const server = Bun.serve<WSData>({
 
           const message: ServerMessage = {
             type: "broadcast-program",
-            msg: result.data.msg,
+            msg: result.data.program,
           };
 
           server.publish(GLOBAL_TOPIC, JSON.stringify(message));

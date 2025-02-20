@@ -1,10 +1,15 @@
 "use client";
+import { parseAttendee } from "@/utils/color";
 import { Attendee } from "@/utils/server";
-import { useEffect, useState } from "react";
-import { ProgramMessage, WSMessage } from "../../../server";
+import { useEffect, useMemo, useState } from "react";
+import { ProgramTypes, WSMessage } from "../../../server";
 import { StatusIndicator } from "./StatusIndicator";
 
-export type ConnectionStatus = "connecting" | "connected" | "disconnected";
+export type ConnectionStatus =
+  | "connecting"
+  | "connected"
+  | "disconnected"
+  | "in-progress";
 
 interface Props {
   attendee: Attendee;
@@ -12,7 +17,13 @@ interface Props {
 
 export const Display = ({ attendee }: Props) => {
   const [status, setStatus] = useState<ConnectionStatus>("connecting");
-  const [show, setShow] = useState<ProgramMessage | undefined>();
+  const [broadcastProgram, setBroadcastProgram] = useState<
+    ProgramTypes | undefined
+  >();
+  const self = useMemo(
+    () => parseAttendee(attendee.program),
+    [attendee.program]
+  );
 
   useEffect(() => {
     const ws = new WebSocket(`ws://localhost:8080/ws?email=${attendee.email}`);
@@ -24,7 +35,8 @@ export const Display = ({ attendee }: Props) => {
       if (message.type === "joined") {
         setStatus("connected");
       } else if (message.type === "broadcast-program") {
-        setShow(message.msg);
+        setBroadcastProgram(message.msg);
+        setStatus("in-progress");
       }
     };
 
@@ -36,14 +48,28 @@ export const Display = ({ attendee }: Props) => {
     return () => ws.close();
   }, [attendee.email]);
 
-  if (show) {
-    return <div className="min-h-screen w-full">{show}</div>;
+  if (!broadcastProgram) {
+    return (
+      <div className="min-h-screen w-full transition-colors duration-1000 grid place-items-center">
+        <div className="p-4 rounded-lg backdrop-blur-sm flex flex-col items-center gap-4">
+          <div className="text-4xl">⁂</div>
+          <StatusIndicator status={status} />
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen w-full transition-colors duration-1000 grid place-items-center">
-      <div className="p-4 rounded-lg backdrop-blur-sm flex flex-col items-center gap-4">
-        <div className="text-4xl">⁂</div>
+    <div
+      className="min-h-screen w-full transition-colors duration-1000"
+      style={{
+        backgroundColor:
+          broadcastProgram === "all" || broadcastProgram === self.program.name
+            ? self.program.programColor
+            : "#000000",
+      }}
+    >
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
         <StatusIndicator status={status} />
       </div>
     </div>

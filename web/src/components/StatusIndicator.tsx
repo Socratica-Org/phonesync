@@ -1,6 +1,22 @@
 import { ConnectionStatus } from "./Display";
 
 export const StatusIndicator = ({ status }: { status: ConnectionStatus }) => {
+  if (status === "in-progress") {
+    // We might actually not want to show this at all
+    return (
+      <div className="flex items-center gap-2 text-white-500 text-sm font-mono">
+        <svg
+          className="w-2.5 h-2.5 animate-pulse"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" fill="currentColor" />
+        </svg>
+        In Progress
+      </div>
+    );
+  }
+
   if (status === "disconnected") {
     return (
       <div className="flex items-center gap-2 text-red-500 text-sm font-mono">

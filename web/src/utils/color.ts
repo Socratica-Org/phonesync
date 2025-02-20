@@ -2,52 +2,32 @@
 // See Waterloo's official color palette here: https://uwaterloo.ca/brand/how-express-our-brand/colour
 // Lowkey their brand color saturation kinda sucks though maybe just use tailwind's
 
-interface Program {
-  name: string;
-  color: string;
+import { ProgramTypes } from "@/server/index";
+
+interface ParsedAttendee {
+  program: {
+    name: ProgramTypes;
+    programColor: string;
+  };
 }
 
-export const getProgram = (program: string): Program => {
+export const parseAttendee = (program: string): ParsedAttendee => {
   const normalizedProgram = program.toLowerCase().trim();
 
-  // Engineering variants
+  // Engineering variants - Deep blue for precision/technology
   if (
     normalizedProgram.includes("engineer") ||
     normalizedProgram.includes("syde")
   ) {
     return {
-      name: "Engineering",
-      color: "#A05DCB",
+      program: {
+        name: "engineering",
+        programColor: "#2563eb",
+      },
     };
   }
 
-  // Science variants
-  if (
-    normalizedProgram.includes("science") ||
-    normalizedProgram.includes("physics") ||
-    normalizedProgram.includes("chemistry") ||
-    normalizedProgram.includes("biology")
-  ) {
-    return {
-      name: "Science",
-      color: "#7E9CCC",
-    };
-  }
-
-  // Arts & Humanities variants
-  if (
-    normalizedProgram.includes("art") ||
-    normalizedProgram.includes("design") ||
-    normalizedProgram.includes("film") ||
-    normalizedProgram.includes("media")
-  ) {
-    return {
-      name: "Arts & Humanities",
-      color: "#F7BF0A",
-    };
-  }
-
-  // Math variants
+  // Math variants - Purple for abstract thinking/complexity
   if (
     normalizedProgram.includes("math") ||
     normalizedProgram.includes("stat") ||
@@ -55,12 +35,44 @@ export const getProgram = (program: string): Program => {
     normalizedProgram.includes("computer")
   ) {
     return {
-      name: "Math",
-      color: "#EF60AD",
+      program: {
+        name: "math",
+        programColor: "#7c3aed",
+      },
     };
   }
 
-  // Environment variants
+  // Science variants - Emerald for nature/discovery
+  if (
+    normalizedProgram.includes("science") ||
+    normalizedProgram.includes("physics") ||
+    normalizedProgram.includes("chemistry") ||
+    normalizedProgram.includes("biology")
+  ) {
+    return {
+      program: {
+        name: "science",
+        programColor: "#059669",
+      },
+    };
+  }
+
+  // Arts & Humanities variants - Rose for creativity/expression
+  if (
+    normalizedProgram.includes("art") ||
+    normalizedProgram.includes("design") ||
+    normalizedProgram.includes("film") ||
+    normalizedProgram.includes("media")
+  ) {
+    return {
+      program: {
+        name: "arts",
+        programColor: "#e11d48",
+      },
+    };
+  }
+
+  // Business variants - Amber for wealth/prosperity
   if (
     normalizedProgram.includes("environment") ||
     normalizedProgram.includes("geography") ||
@@ -68,26 +80,17 @@ export const getProgram = (program: string): Program => {
     normalizedProgram.includes("climate")
   ) {
     return {
-      name: "Environment",
-      color: "#CEDE00",
-    };
-  }
-
-  // Health variants
-  if (
-    normalizedProgram.includes("health") ||
-    normalizedProgram.includes("kinesiology") ||
-    normalizedProgram.includes("medicine") ||
-    normalizedProgram.includes("nursing")
-  ) {
-    return {
-      name: "Health",
-      color: "#00C2DE",
+      program: {
+        name: "business",
+        programColor: "#d97706",
+      },
     };
   }
 
   return {
-    name: "Unknown",
-    color: "#ffffff",
+    program: {
+      name: "unknown",
+      programColor: "#000000", // keep black as default
+    },
   };
 };
