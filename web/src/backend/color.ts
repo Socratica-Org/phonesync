@@ -2,7 +2,7 @@
 // See Waterloo's official color palette here: https://uwaterloo.ca/brand/how-express-our-brand/colour
 // Lowkey their brand color saturation kinda sucks though maybe just use tailwind's
 
-import { ProgramTypes } from "@/server/types";
+import { ProgramTypes } from "./types";
 
 interface ParsedAttendee {
   program: {

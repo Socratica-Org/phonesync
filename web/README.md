@@ -1,3 +1,13 @@
+# Deployment
+
+Trigger manual deployment (have to because attendees.json is not committed)
+
+```sh
+vercel
+```
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
