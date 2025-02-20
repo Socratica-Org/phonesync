@@ -1,8 +1,8 @@
 "use client";
 import { parseAttendee } from "@/backend/color";
 import { Attendee } from "@/backend/server";
+import { ProgramTypes, WSMessage } from "@/server/types";
 import { useEffect, useMemo, useState } from "react";
-import { ProgramTypes, WSMessage } from "../../../server";
 import { StatusIndicator } from "./StatusIndicator";
 
 export type ConnectionStatus =
