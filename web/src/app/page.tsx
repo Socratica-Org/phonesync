@@ -1,4 +1,5 @@
 import { Display } from "@/components/Display";
+import { Landing } from "@/components/Landing";
 import { getAttendeeFromEmail } from "@/utils/server";
 
 export default async function Home({
@@ -7,26 +8,27 @@ export default async function Home({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const email = (await searchParams).email as string;
+
   if (!email) {
-    return (
-      <div className="grid place-items-center min-h-screen">
-        <div className="text-center space-y-4">
-          <h1 className="text-2xl font-bold">No email provided</h1>
-          <p className="text-gray-600">
-            Please provide an email in the URL parameters
-          </p>
-        </div>
-      </div>
-    );
+    return <Landing />;
   }
 
   const attendee = getAttendeeFromEmail(email);
   if (!attendee) {
     return (
-      <div className="grid place-items-center min-h-screen">
-        <div className="text-center space-y-4">
-          <h1 className="text-2xl font-bold">Attendee not found</h1>
-          <p className="text-gray-600">No attendee found with email: {email}</p>
+      <div
+        className="min-h-screen w-full transition-colors duration-1000 grid place-items-center"
+        style={{
+          fontFamily: "Geist",
+        }}
+      >
+        <div className="p-4 px-8 rounded-lg backdrop-blur-sm flex flex-col items-center gap-4 text-center">
+          <div className="text-4xl">⁂</div>
+          <p className="text-sm text-slate-300">
+            {
+              "Looks like this link is malformed. Please check the email you used to RSVP and try again."
+            }
+          </p>
         </div>
       </div>
     );
