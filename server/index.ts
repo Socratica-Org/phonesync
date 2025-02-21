@@ -43,6 +43,7 @@ const server = Bun.serve<WSData>({
 
         case "/ws": {
           const email = url.searchParams.get("email");
+          console.log(`Websocket join request from ${email}`);
           const result = WSDataSchema.safeParse({ email });
 
           if (!result.success) {
@@ -63,6 +64,8 @@ const server = Bun.serve<WSData>({
           if (!result.success) {
             return errorResponse(result.error.message);
           }
+
+          console.log(`Broadcasting program ${result.data.program}`);
 
           const message: ServerMessage = {
             type: "broadcast-program",
