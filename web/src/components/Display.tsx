@@ -56,7 +56,7 @@ export const Display = ({ attendee }: Props) => {
 
   if (!broadcastProgram) {
     return (
-      <div className="min-h-screen w-full transition-colors duration-1000 grid place-items-center">
+      <div className="h-screen w-full transition-colors duration-1000 grid place-items-center">
         <div className="p-4 rounded-lg backdrop-blur-sm flex flex-col items-center gap-2">
           <div className="text-4xl">⁂</div>
           <StatusIndicator status={status} />
@@ -67,7 +67,7 @@ export const Display = ({ attendee }: Props) => {
 
   return (
     <div
-      className="min-h-screen w-full transition-colors duration-1000"
+      className="h-screen w-full transition-colors duration-1000"
       style={{
         backgroundColor:
           broadcastProgram === "all" || broadcastProgram === self.program.name

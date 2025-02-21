@@ -17,7 +17,7 @@ export default async function Home({
   if (!attendee) {
     return (
       <div
-        className="bg-zinc-950 min-h-screen w-full transition-colors duration-1000 grid place-items-center"
+        className="bg-zinc-950 h-screen w-full transition-colors duration-1000 grid place-items-center"
         style={{
           fontFamily: "Geist",
         }}

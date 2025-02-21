@@ -7,8 +7,8 @@ export const Landing = () => {
   const router = useRouter();
 
   return (
-    <div className="bg-zinc-950 min-h-screen w-full transition-colors duration-1000 grid place-items-center">
-      <div className="p-4 px-8 rounded-lg backdrop-blur-sm flex flex-col items-center">
+    <div className="bg-zinc-950 h-screen w-full transition-colors duration-1000 grid place-items-center">
+      <div className="rounded-lg backdrop-blur-sm flex flex-col items-center">
         <div className="text-4xl animate-spin [animation-duration:6s]">⁂</div>
         <p className="text-sm text-slate-100 mt-2 font-medium">
           Socratica Symposium W25
