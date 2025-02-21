@@ -12,6 +12,7 @@ export const ProgramMessageSchema = z.enum([
   "business",
   "unknown",
   "all",
+  "none",
 ]);
 
 export const BroadcastProgramMessageSchema = z.object({
